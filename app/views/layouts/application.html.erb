@@ -6,14 +6,18 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+    <link type="Image/x-icon" href="image.png" rel="icon">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= favicon_link_tag asset_path('favicon-32x32.png') %>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+    <%= render 'layouts/header' %>
+    <%= render 'layouts/flash_message' %>
+    <%= yield %>
+    <%= render 'layouts/footer' %>
   </body>
 </html>
