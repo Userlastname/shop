@@ -1,9 +1,16 @@
 class ProductsController < ApplicationController
-  def show
-    render "home/show"
+  def index
+    @products = Product.all
   end
 
-  def cart 
-    render "home/cart"
-  end
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_product
+      @product = Product.find(params[:id])
+    end
+
+    # Only allow a list of trusted parameters through.
+    def product_params
+      params.require(:product).permit(:name, :description, :category_id)
+    end
 end
