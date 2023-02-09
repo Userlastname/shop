@@ -1,16 +1,19 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.all
+    @products = collection
+  end
+
+  def show
+    @product = resource
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def product_params
-      params.require(:product).permit(:name, :description, :category_id)
-    end
+  def collection
+    Product.ordered
+  end
+
+  def resource
+    collection.find(params[:id])
+  end
 end

@@ -1,17 +1,21 @@
 class ApplicationController < ActionController::Base
-  before_action :set_render_cart
-  before_action :initialize_cart
+  attr_accessor :current_cart
+  before_action :initalize_cart
 
-  def set_render_cart
-    @render_cart = true
-  end
-
-  def initialize_cart
-    @cart ||= Cart.find_by(id: session[:cart_id])
-
-    if @cart.nil?
-      @cart = Cart.create
-      session[:cart_id] = @cart.id
+  def initalize_cart
+    if user_signed_in?
+      if current_user.cart.present?
+        @current_cart = current_user.cart
+      else
+        @current_cart = Cart.create(user: current_user)
+      end
+    else
+      if session[:cart_id].present?
+        @current_cart = Cart.find(session[:cart_id])
+      else
+        @current_cart = Cart.create
+        session[:cart_id] = @current_cart.id
+      end
     end
   end
 end

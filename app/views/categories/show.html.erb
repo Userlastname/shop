@@ -1,23 +1,17 @@
 <div class="max-w-5xl mx-auto">
-  <% @category.products.each do |f| %>
-  <div class="flex justify-center">
-    <div class="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg">
-      <% if f.category_id == 4 %>
-        <img class=" w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src="https://rawlingswebsite.s3.amazonaws.com/products/Images%20Transparent%20Background%20x%201000/B2012%20.png" alt="" />
-      <% elsif f.category_id == 5 %>
-        <img class=" w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src="https://cdn-icons-png.flaticon.com/512/58/58209.png" alt="" />
-      <% else %>
-        <img class=" w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src="https://media.istockphoto.com/id/1148021618/vector/wine-bottle-dark-silhouette.jpg?s=612x612&w=0&k=20&c=60bzp9lcUHK8YF37FCs_sjPRSXMpw7itnxSKuN7GDw4=" alt="" />
-      <% end %>      
+  <% @category.products.each do |product| %>
+    <div class="flex justify-center">
+      <div class="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg">
+          <img class=" w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src="https://cdn-icons-png.flaticon.com/512/135/135763.png" alt="" />
         <div class="p-6 flex flex-col justify-start">
-        <h5 class="text-gray-900 text-xl font-medium mb-2"><%= f.name %></h5>
-        <p class="text-gray-700 text-base mb-4"><%= f.price %>₴</p>
-        <p class="text-gray-700 text-base mb-4"><%= f.description %></p>
-        <%= link_to products_url do %>
-        <button type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 ">Add to cart</button>
-        <% end %>
+          <h5 class="text-gray-900 text-xl font-medium mb-2"><%= product.name %></h5>
+          <p class="text-gray-700 text-base mb-4"><%= product.price %>₴</p>
+          <p class="text-gray-700 text-base mb-4"><%= product.description %></p>
+          <%= link_to products_url do %>
+            <button type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 ">Add to cart</button>
+          <% end %>
+        </div>
       </div>
     </div>
-  </div>
   <% end %>
 </div>
