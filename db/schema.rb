@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_08_091857) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_12_100258) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,7 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_08_091857) do
   create_table "cart_products", force: :cascade do |t|
     t.bigint "cart_id", null: false
     t.bigint "product_id", null: false
-    t.integer "quantity", null: false
+    t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cart_id"], name: "index_cart_products_on_cart_id"
@@ -36,7 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_08_091857) do
   end
 
   create_table "carts", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_carts_on_user_id"
@@ -61,6 +61,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_08_091857) do
     t.index ["order_id"], name: "index_order_details_on_order_id"
   end
 
+  create_table "order_products", force: :cascade do |t|
+    t.bigint "order_id"
+    t.bigint "product_id"
+    t.integer "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_products_on_order_id"
+    t.index ["product_id"], name: "index_order_products_on_product_id"
+  end
+
   create_table "orders", force: :cascade do |t|
     t.datetime "ordered_at"
     t.string "status"
@@ -70,23 +80,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_08_091857) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "orders_products", id: false, force: :cascade do |t|
-    t.bigint "product_id", null: false
-    t.bigint "order_id", null: false
-    t.integer "amount"
-    t.integer "quantity"
-    t.index ["order_id", "product_id"], name: "index_orders_products_on_order_id_and_product_id"
-    t.index ["product_id", "order_id"], name: "index_orders_products_on_product_id_and_order_id"
-  end
-
   create_table "products", force: :cascade do |t|
-    t.string "name"
     t.decimal "price"
+    t.string "name"
+    t.text "description"
     t.integer "position"
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "description"
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
@@ -105,12 +106,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_08_091857) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "addresses", "users"
   add_foreign_key "cart_products", "carts"
   add_foreign_key "cart_products", "products"
-  add_foreign_key "carts", "users"
   add_foreign_key "order_details", "addresses"
   add_foreign_key "order_details", "orders"
-  add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
 end

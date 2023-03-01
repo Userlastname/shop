@@ -5,8 +5,8 @@ class Addresses < ActiveRecord::Migration[7.0]
       t.string :city
       t.string :street
       t.text :comment
-      t.references :user, null: true, foreign_key: true
+      t.references :user, foreign_key: false
       t.timestamps
-    end    
+    end
   end
 end

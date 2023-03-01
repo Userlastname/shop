@@ -3,12 +3,12 @@ Rails.application.routes.draw do
   resources :products
   resources :categories
   resources :carts
+  resources :orders
   devise_for :users, controllers: {
     sessions: "users/sessions",
     registrations: "users/registrations"
   }
-  post 'cart_products/:id/reduce' => "cart_products#reduce_quantity", as: "cart_item_reduce"
-  post 'cart_products/:id/add' => "cart_products#add_quantity", as: "cart_item_add"
-  delete "cart_products/:id" => "cart_products#destroy_item", as: "destroy_item"
-  post 'cart_products' => "cart_products#create", as: "add_item"
+  post 'carts/:id/reduce', to: "carts#reduce_quantity", as: "reduce_qunt"
+  post 'carts/:id/add', to: "carts#add_quantity", as: "add_qunt"
+  delete "carts/:id", to: "carts#destroy", as: "destroy_item"
 end
