@@ -1,27 +1,18 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
-  # before_action :configure_sign_in_params, only: [:create]
+  def create
+    super
 
-  # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+    link_cart_to_user
+  end
 
-  # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  private
 
-  # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def link_cart_to_user
+    return if session[:cart_id].blank?
 
-  # protected
-
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_in_params
-  #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
-  # end
+    cart = Cart.find(session[:cart_id])
+    cart.update(user: current_user)
+  end
 end

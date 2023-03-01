@@ -1,0 +1,77 @@
+<div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+  <table class="min-w-full leading-normal">
+    <div class="text-center">
+      <% if !@cart.products.present? %>
+        <h1>No products in cart.</h1>
+      <% else %>
+        <%= link_to 'Order', new_order_path,  method: :get, type: "button", class: "text-aqua bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" %>
+        <p class="text-sm"><%= number_to_currency(@cart.sub_total) %></p>
+        <h1 class="mb-1 text-lg font-bold"><%=  %></h1>
+      </div>
+      <thead>
+        <tr>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"></th>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            Product
+          </th>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            Quantity
+          </th>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            Price
+          </th>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            Total
+          </th>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"></th>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"></th>
+          <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            Cancel
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @cart.cart_products.each do |item| %>
+        <tr>
+          <td class="px-5 py-5 bg-white text-sm">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 w-10 h-10">
+                <img class="w-full h-full rounded-full" src="https://cdn-icons-png.flaticon.com/512/135/135763.png" alt="" />
+              </div>
+              <div class="ml-3">
+                <p class="text-gray-900 whitespace-no-wrap">
+                  <div class="text-lg "></div>
+                </p>
+              </div>
+            </div>
+          </td>
+          <td class="px-5 py-5 bg-white text-sm">
+            <p class="text-gray-900 whitespace-no-wrap"><%= item.product.name %></p>
+          </td>
+          <td class="px-5 py-5 bg-white text-sm">
+            <p class="text-gray-900 whitespace-no-wrap"><%= item.quantity%></p>
+          </td>
+          <td class="px-5 py-5 bg-white text-sm">
+            <p class="text-gray-900 whitespace-no-wrap"><%= number_to_currency(item.product.price)%></p>
+          </td>
+          <td class="px-5 py-5 bg-white text-sm">
+            <p class="text-sm"><%= number_to_currency(item.total_price) %></p>
+          </td>
+          <td>
+          <%= button_to "+", add_qunt_path(item), method: :post%>
+          </td>
+          <td>
+            <%= button_to "-", reduce_qunt_path(item), method: :post%>
+          </td>
+          <td class="px-5 py-5 bg-white text-sm">
+            <span class="relative inline-block px-3 py-1 font-semibold text-red-500 leading-tight">
+            <span aria-hidden="" class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+            <span class="relative"><%= button_to "Remove item", destroy_item_path(item), method: :delete %></span>
+            </span>
+          </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
